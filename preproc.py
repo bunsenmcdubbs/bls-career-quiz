@@ -4,6 +4,7 @@ import pandas
 
 def load_data(filepath):
     series = pandas.read_csv(filepath, delimiter='\t')
+    series['value'] = pandas.to_numeric(series['value'], errors='coerce').fillna(0.0)
     series['occupation_code'] = series['series_id'].map(lambda a: a[9:12])
     series['estimate_code'] = series['series_id'].map(lambda a: a[15:])
     
@@ -18,7 +19,7 @@ def load_data(filepath):
 
 def preproc(inpath, outpath):
     data = load_data(inpath)
-    data.to_csv(outpath)
+    data.to_csv(outpath, index=False)
     
 if __name__=='__main__':
     inpath = 'ordata/or.data.1.AllData'
