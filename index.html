@@ -4,37 +4,78 @@
         <title>BLS Career Explorer | Andrew Dai</title>
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-default.min.css" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.10/dc.css" rel="stylesheet">
 
     </head>
 
     <body>
+        <h1>Career Explorer</h1>
         <div class="container">
-            <div id="test">
-                <span>test</span>
-                <span class='reset' style='visibility: hidden;'>
-                    Current filter: <span class='filter'></span>
-                </span>
+            <div class="row">
+                <div id="experience_chart">
+                    <strong>Experience</strong>
+                    <span class='reset' style='visibility:hidden;'>
+                        Current filter: <span class='filter'></span>
+                    </span>
+                    <a class='reset'
+                       href='javascript:experience_chart.filterAll();dc.redrawAll();'
+                       style='visibility: hidden;'>reset
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
             </div>
-            <div id="test2">
-                <span>test</span>
-                <span class='reset' style='visibility: hidden;'>
-                    Current filter: <span class='filter'></span>
-                </span>
+            <div class="row">
+                <div id="pace_chart">
+                    <strong>Pace of work</strong>
+                    <span class='reset' style='visibility:hidden;'>
+                        Current filter: <span class='filter'></span>
+                    </span>
+                    <a class='reset'
+                       href='javascript:pace_chart.filterAll();dc.redrawAll();'
+                       style='visibility: hidden;'>reset
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
             </div>
-            <div id="test3">
-                <span>test</span>
-                <span class='reset' style='visibility: hidden;'>
-                    Current filter: <span class='filter'></span>
-                </span>
+            <div class="row">
+                <div id="communication_chart">
+                    <strong>Communication</strong>
+                    <span class='reset' style='visibility:hidden;'>
+                        Current filter: <span class='filter'></span>
+                    </span>
+                    <a class='reset'
+                       href='javascript:communication_chart.filterAll();dc.redrawAll();'
+                       style='visibility: hidden;'>reset
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="physicality_chart">
+                    <strong>Physicality</strong>
+                    <span class='reset' style='visibility:hidden;'>
+                        Current filter: <span class='filter'></span>
+                    </span>
+                    <a class='reset'
+                       href='javascript:physicality_chart.filterAll();dc.redrawAll();'
+                       style='visibility: hidden;'>reset
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="row">
+                <table id="data_table">
+                </table>
             </div>
         </div>
 
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.10/dc.js"></script>
-        <script type="text/javascript" src="./script.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.4.5/crossfilter.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.10/dc.js"></script>
+        <script src="./script.js"></script>
 
 
     </body>
