@@ -4,9 +4,9 @@ import pandas
 
 def load_data(filepath):
     series = pandas.read_csv(filepath, delimiter='\t')
-    series['value'] = pandas.to_numeric(series['value'], errors='coerce').fillna(0.0)
+    series['value'] = pandas.to_numeric(series['value'], errors='coerce')
     series['occupation_code'] = series['series_id'].map(lambda a: a[9:12])
-    series['estimate_code'] = series['series_id'].map(lambda a: a[15:])
+    series['estimate_code'] = series['series_id'].map(lambda a: a[15:20])
     
     estimate_codes = series['estimate_code'].unique()
     data = pandas.DataFrame({'occupation_code': series['occupation_code'].unique()})
