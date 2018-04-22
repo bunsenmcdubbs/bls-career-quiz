@@ -134,6 +134,7 @@ d3.csv('job-data.csv', function(data) {
 
         .controlsUseVisibility(true);
 
+    currency_formatter = d3.format('$,.2f');
     jobs_table
         .dimension(occupation_code_dim)
         .group(function(d) { return ""; })
@@ -144,7 +145,19 @@ d3.csv('job-data.csv', function(data) {
                 format: function(d) {
                     return d.occupation_text;
                 }
-            }
+            },
+            {
+                label: 'Number Employed',
+                format: function(d) {
+                    return Math.round(d.num_employed);
+                }
+            },
+            {
+                label: 'Median Annual Wage',
+                format: function(d) {
+                    return currency_formatter(+d.med_annual_wage);
+                }
+            },
         ]);
 
     dc.renderAll();
