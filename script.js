@@ -100,9 +100,7 @@ d3.csv('job-data.csv', function(data) {
         })
 
         .x(d3.scale.linear().domain([20000, 210000]))
-        // .xUnits(function() {return wage_group.all().length + 1;})
         .xUnits(function() {return 19;})
-        // .elasticX(true)
         .elasticY(true)
         .yAxisPadding('10%')
         .yAxisLabel('# Employed')
@@ -124,7 +122,7 @@ d3.csv('job-data.csv', function(data) {
 
         .innerRadius(50)
         .externalRadiusPadding(25)
-        .slicesCap(10)
+        .slicesCap(13)
         .controlsUseVisibility(true);
 
     experience_chart
@@ -138,6 +136,7 @@ d3.csv('job-data.csv', function(data) {
         .x(d3.scale.linear())
         .elasticX(true)
         .elasticY(true)
+        .xAxisLabel('Experience Index')
         .yAxisLabel('# Employed')
         .renderHorizontalGridLines(true)
 
@@ -155,6 +154,7 @@ d3.csv('job-data.csv', function(data) {
         .x(d3.scale.linear())
         .elasticX(true)
         .elasticY(true)
+        .xAxisLabel('Uncertainty Index')
         .yAxisLabel('# Employed')
         .renderHorizontalGridLines(true)
 

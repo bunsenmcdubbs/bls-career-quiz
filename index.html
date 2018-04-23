@@ -12,85 +12,121 @@
     </head>
 
     <body>
-        <h1>Career Explorer</h1>
         <div class="container">
             <div class="row">
-                <div id="wage_chart">
-                    <strong>Average Annual Wage</strong>
-                    <span class='reset' style='visibility:hidden;'>
-                        Current filter: <span class='filter'></span>
-                    </span>
-                    <a class='reset'
-                       href='javascript:wage_chart.filterAll();dc.redrawAll();'
-                       style='visibility: hidden;'>reset
-                    </a>
-                    <div class="clearfix"></div>
-                </div>
-                <div id="category_chart">
-                    <strong>Portion of Occupations by Industry</strong>
-                    <a class='reset'
-                       href='javascript:category_chart.filterAll();dc.redrawAll();'
-                       style='visibility: hidden;'>reset
-                    </a>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
+                <div class="col-sm">
+                    <div class="card fluid">
 
-            <div class="row row2">
-                <div id="experience_chart">
-                    <strong>Prior Experience and Training</strong>
-                    <a class='reset'
-                       href='javascript:experience_chart.filterAll();dc.redrawAll();'
-                       style='visibility: hidden;'>reset
-                    </a>
-                    <div class="clearfix"></div>
-                </div>
-                <div id="uncertainty_chart">
-                    <strong>Uncertainty in Decision Making</strong>
-                    <a class='reset'
-                       href='javascript:uncertainty_chart.filterAll();dc.redrawAll();'
-                       style='visibility: hidden;'>reset
-                    </a>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
+                        <div class="section">
+                            <h1>Career Explorer <small>by Andrew Dai</small></h1>
+                        </div>
 
-            <div class="row scatterplots">
-                <div id="pace_chart">
-                    <strong>Variety vs Pace of work</strong>
-                    <a class='reset'
-                       href='javascript:pace_chart.filterAll();dc.redrawAll();'
-                       style='visibility: hidden;'>reset
-                    </a>
-                    <div class="clearfix"></div>
-                </div>
-                <div id="communication_chart">
-                    <strong>Interaction Complexity vs Frequency</strong>
-                    <a class='reset'
-                       href='javascript:communication_chart.filterAll();dc.redrawAll();'
-                       style='visibility: hidden;'>reset
-                    </a>
-                    <div class="clearfix"></div>
-                </div>
-                <div id="physicality_chart">
-                    <strong>Danger vs Physicality</strong>
-                    <a class='reset'
-                       href='javascript:physicality_chart.filterAll();dc.redrawAll();'
-                       style='visibility: hidden;'>reset
-                    </a>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
+                        <div class="section">
+                            <p>
+                                Created for partial satisfaction of the requirements for LMC 3403
+                                Technical Communications with Dr. Herrington for the Spring 2018
+                                semester.
+                                <a href="https://github.com/bunsenmcdubbs/bls-career-quiz">View the source</a>.
+                            </p>
+                            <p>
+                                This visualization uses <a href="https://dc-js.github.io/dc.js/">dc.js</a> for interactive, multi-dimensional data visualization.
+                                Data comes from the 2017
+                                <a href="https://www.bls.gov/ors/">Occupational Requirements Survey</a>
+                                and
+                                <a href="https://www.bls.gov/oes/">Occupational Employment Survey</a>
+                                from the <a href="https://www.bls.gov">Bureau of Labor Statistics</a>.
+                            </p>
+                        </div>
 
-            <div class="row">
-                <div class="dc-data-count" id="average_wage"></div>
-                <div class="dc-data-count" id="num_employed"></div>
-                <div class="dc-data-count" id="num_jobs"></div>
-            </div>
+                        <div class="section">
+                            <div id="wage_chart">
+                                <strong>Average Annual Wage</strong>
+                                <span class='reset' style='visibility:hidden;'>
+                                    Current filter: <span class='filter'></span>
+                                </span>
+                                <a class='reset'
+                                   href='javascript:wage_chart.filterAll();dc.redrawAll();'
+                                   style='visibility: hidden;'>reset
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div id="category_chart">
+                                <strong>Number of Occupations by Category</strong>
+                                <a class='reset'
+                                   href='javascript:category_chart.filterAll();dc.redrawAll();'
+                                   style='visibility: hidden;'>reset
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
 
-            <div class="row">
-                <table id="data_table">
-                </table>
+                        <div class="section">
+                            <h2>Job Characteristics <small><a href="https://github.com/bunsenmcdubbs/bls-career-quiz/blob/master/transform_or.ipynb">View the methodology</a></small></h2>
+                            <p>
+                                Job characteristic indices were created from data reported in the
+                                <a href="https://www.bls.gov/ors/">Occupational Requirements Survey</a>
+                                by the
+                                <a href="https://www.bls.gov/">Bureau of Labor Statistics</a>.</p>
+                        </div>
+
+                        <div class="section">
+                            <div id="experience_chart">
+                                <strong>Prior Experience and Training</strong>
+                                <a class='reset'
+                                   href='javascript:experience_chart.filterAll();dc.redrawAll();'
+                                   style='visibility: hidden;'>reset
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div id="uncertainty_chart">
+                                <strong>Uncertainty in Decision Making</strong>
+                                <a class='reset'
+                                   href='javascript:uncertainty_chart.filterAll();dc.redrawAll();'
+                                   style='visibility: hidden;'>reset
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <div id="pace_chart" class="scatterplots">
+                                <strong>Variety vs Pace of work</strong>
+                                <a class='reset'
+                                   href='javascript:pace_chart.filterAll();dc.redrawAll();'
+                                   style='visibility: hidden;'>reset
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div id="communication_chart" class="scatterplots">
+                                <strong>Interaction Complexity vs Frequency</strong>
+                                <a class='reset'
+                                   href='javascript:communication_chart.filterAll();dc.redrawAll();'
+                                   style='visibility: hidden;'>reset
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div id="physicality_chart" class="scatterplots">
+                                <strong>Danger vs Physicality</strong>
+                                <a class='reset'
+                                   href='javascript:physicality_chart.filterAll();dc.redrawAll();'
+                                   style='visibility: hidden;'>reset
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="card fluid">
+                        <div class="section">
+                            <h2>Selected Occupations</h2>
+                            <div class="dc-data-count" id="average_wage"></div>
+                            <div class="dc-data-count" id="num_employed"></div>
+                            <div class="dc-data-count" id="num_jobs"></div>
+                        </div>
+                        <div class="section"><table id="data_table"></table></div>
+                    </div>
+                </div>
             </div>
         </div>
 

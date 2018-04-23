@@ -1,3 +1,7 @@
+.container {
+    max-width: 1250px;
+}
+
 #wage_chart .barLabel {
     font-size: 80%;
 }
@@ -6,7 +10,11 @@
     fill: black;
 }
 
-.row2 g.x.axis g.tick {
+#experience_chart g.x.axis g.tick {
+    display: none;
+}
+
+#uncertainty_chart g.x.axis g.tick {
     display: none;
 }
 
