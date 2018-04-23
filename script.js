@@ -1,4 +1,5 @@
-average_wage_display = dc.numberDisplay('#average_wage');
+average_wage_display1 = dc.numberDisplay('#average_wage1');
+average_wage_display2 = dc.numberDisplay('#average_wage2');
 num_employed_display = dc.numberDisplay('#num_employed');
 num_jobs_display1 = dc.dataCount('#num_jobs1');
 num_jobs_display2 = dc.dataCount('#num_jobs2');
@@ -64,20 +65,24 @@ d3.csv('job-data.csv', function(data) {
     var communication_group = communication_type_dim.group().reduceCount();
     var physicality_group = physicality_danger_dim.group().reduceCount();
 
-    average_wage_display
+    average_wage_display1
         .group(total_wage)
         .valueAccessor(function(p) {return p / num_employed_display.value();})
         .html({
-            some: 'Average selected annual wage: <strong>$%number</strong>',
-            all: 'All occupations selected. Please click on the graph to apply filters.'
+            some: '<strong>$%number</strong>'
+        });
+    average_wage_display2
+        .group(total_wage)
+        .valueAccessor(function(p) {return p / num_employed_display.value();})
+        .html({
+            some: 'Average annual wage: <strong>$%number</strong>'
         });
 
     num_employed_display
         .group(num_employed)
         .valueAccessor(function(p) {return p;})
         .html({
-            some: '<strong>%number jobs</strong> selected',
-            all: 'All occupations selected. Please click on the graph to apply filters.'
+            some: '<strong>%number jobs</strong>'
         });
 
     num_jobs_display1
@@ -85,14 +90,14 @@ d3.csv('job-data.csv', function(data) {
         .group(ndx.groupAll())
         .html({
             some: '<strong>%filter-count occupations</strong> selected out of <strong>%total-count</strong> records | <a href=\'javascript:dc.filterAll(); dc.renderAll();\'>Reset All</a>',
-            all: 'All records selected. Please click on the graph to apply filters.'
+            all: 'All records selected. Please click and drag on the graphs to apply filters.'
         });
     num_jobs_display2
         .dimension(ndx)
         .group(ndx.groupAll())
         .html({
             some: '<strong>%filter-count occupations</strong> selected out of <strong>%total-count</strong> records | <a href=\'javascript:dc.filterAll(); dc.renderAll();\'>Reset All</a>',
-            all: 'All records selected. Please click on the graph to apply filters.'
+            all: 'All records selected. Please click and drag on the graphs to apply filters.'
         });
 
     var short_currency = d3.format('$.1s');
@@ -190,8 +195,9 @@ d3.csv('job-data.csv', function(data) {
         .renderVerticalGridLines(true)
 
         .symbolSize(8)
-        .nonemptyOpacity(.4)
+        .nonemptyOpacity(.6)
         .excludedSize(3)
+        .excludedOpacity(.5)
         .controlsUseVisibility(true);
     pace_chart.xAxis().tickSize(0);
     pace_chart.yAxis().tickSize(0);
@@ -214,8 +220,9 @@ d3.csv('job-data.csv', function(data) {
         .renderVerticalGridLines(true)
 
         .symbolSize(8)
-        .nonemptyOpacity(.4)
+        .nonemptyOpacity(.6)
         .excludedSize(3)
+        .excludedOpacity(.5)
         .controlsUseVisibility(true);
     communication_chart.xAxis().tickSize(0);
     communication_chart.yAxis().tickSize(0);
@@ -238,8 +245,9 @@ d3.csv('job-data.csv', function(data) {
         .renderVerticalGridLines(true)
 
         .symbolSize(8)
-        .nonemptyOpacity(.4)
+        .nonemptyOpacity(.6)
         .excludedSize(3)
+        .excludedOpacity(.5)
         .controlsUseVisibility(true);
     physicality_chart.xAxis().tickSize(0);
     physicality_chart.yAxis().tickSize(0);
