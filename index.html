@@ -15,12 +15,29 @@
         <h1>Career Explorer</h1>
         <div class="container">
             <div class="row">
-                <div class="col-6">
+                <div class="col-4">
+                    <div class="dc-data-count" id="average_wage">
+                    </div>
+                </div>
+                <div class="col-4">
                     <div class="dc-data-count" id="num_employed"></div>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="dc-data-count" id="num_jobs">
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="wage_chart">
+                    <strong>Average Annual Wage</strong>
+                    <span class='reset' style='visibility:hidden;'>
+                        Current filter: <span class='filter'></span>
+                    </span>
+                    <a class='reset'
+                       href='javascript:wage_chart.filterAll();dc.redrawAll();'
+                       style='visibility: hidden;'>reset
+                    </a>
+                    <div class="clearfix"></div>
                 </div>
             </div>
             <div class="row">

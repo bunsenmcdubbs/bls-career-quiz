@@ -1,5 +1,7 @@
-num_jobs_display = dc.dataCount('#num_jobs');
+average_wage_display = dc.numberDisplay('#average_wage');
 num_employed_display = dc.numberDisplay('#num_employed');
+num_jobs_display = dc.dataCount('#num_jobs');
+wage_chart = dc.barChart('#wage_chart');
 experience_chart = dc.barChart('#experience_chart');
 uncertainty_chart = dc.barChart('#uncertainty_chart');
 pace_chart = dc.scatterPlot('#pace_chart');
@@ -9,33 +11,68 @@ jobs_table = dc.dataTable('#data_table');
 
 d3.csv('job-data.csv', function(data) {
 
+    data.forEach(function(d) {
+        d.num_employed = +d.num_employed;
+        d.mean_annual_wage = +d.mean_annual_wage;
+
+        d.communication = +d.communication;
+        d.interaction_complexity = +d.interaction_complexity;
+        d.experience = +d.experience;
+        d.uncertain_decisions = +d.uncertain_decisions;
+        d.pace_of_work = +d.pace_of_work;
+        d.variety = +d.variety;
+        d.physicality = +d.physicality;
+        d.danger = +d.danger;
+    });
+
     var ndx = crossfilter(data);
 
+    var wage_dim = ndx.dimension(function(d) {
+        return Math.floor(d.mean_annual_wage / 10000) * 10000;
+    });
     var occupation_code_dim = ndx.dimension(function (d) {
         return d.occupation_code;
     });
     var communication_type_dim = ndx.dimension(function (d) {
-        return [+d.communication, +d.interaction_complexity];
+        return [d.communication, d.interaction_complexity];
     });
     var experience_dim = ndx.dimension(function (d) {
-        return Math.round(+d.experience * 2);
+        return Math.round(d.experience * 2);
     });
     var uncertainty_dim = ndx.dimension(function (d) {
-        return Math.round(+d.uncertain_decisions * 5);
+        return Math.round(d.uncertain_decisions * 5);
     });
     var pace_variety_dim = ndx.dimension(function (d) {
-        return [+d.pace_of_work, +d.variety];
+        return [d.pace_of_work, d.variety];
     });
     var physicality_danger_dim = ndx.dimension(function (d) {
-        return [+d.physicality, +d.danger];
+        return [d.physicality, d.danger];
     });
 
-    var num_employed = ndx.groupAll().reduceSum(function(d) {return +d.num_employed;});
+    var total_wage = ndx.groupAll().reduceSum(function (d) {return d.mean_annual_wage * d.num_employed;});
+    var num_employed = ndx.groupAll().reduceSum(function(d) {return d.num_employed;});
+    var wage_group = wage_dim.group().reduceSum(function(d) {return d.num_employed;});
     var communication_group = communication_type_dim.group().reduceCount();
-    var experience_group = experience_dim.group().reduceSum(function(d) {return +d.num_employed;});
-    var uncertainty_group = uncertainty_dim.group().reduceSum(function(d) {return +d.num_employed;});
-    var pace_variety_group = pace_variety_dim.group().reduceSum(function(d) {return +d.num_employed;});
+    var experience_group = experience_dim.group().reduceSum(function(d) {return d.num_employed;});
+    var uncertainty_group = uncertainty_dim.group().reduceSum(function(d) {return d.num_employed;});
+    var pace_variety_group = pace_variety_dim.group().reduceSum(function(d) {return d.num_employed;});
     var physicality_group = physicality_danger_dim.group().reduceCount();
+
+    num_employed_display
+        .group(num_employed)
+        .valueAccessor(function(p) {return p;})
+        .html({
+            some: '<strong>%number jobs</strong> selected',
+            all: 'All occupations selected. Please click on the graph to apply filters.'
+        });
+
+    average_wage_display
+        .group(total_wage)
+        .valueAccessor(function(p) {return p / num_employed_display.value();})
+        .html({
+            some: 'Average annual wage: <strong>$%number</strong>',
+            all: 'All occupations selected. Please click on the graph to apply filters.'
+        });
 
     num_jobs_display
         .dimension(ndx)
@@ -45,13 +82,22 @@ d3.csv('job-data.csv', function(data) {
             all: 'All records selected. Please click on the graph to apply filters.'
         });
 
-    num_employed_display
-        .group(num_employed)
-        .valueAccessor(function(p) {return p;})
-        .html({
-            some: '<strong>%number jobs</strong> selected',
-            all: 'All occupations selected. Please click on the graph to apply filters.'
-        });
+    wage_chart
+        .width(600)
+        .height(150)
+        .margins({top: 10, right: 50, bottom: 30, left: 60})
+
+        .dimension(wage_dim)
+        .group(wage_group)
+
+        .x(d3.scale.linear())
+        // .xUnits(function() {return wage_group.all().length + 1;})
+        .xUnits(function() {return 20;})
+        .elasticX(true)
+        .elasticY(true)
+        .yAxisLabel('# Employed')
+
+        .controlsUseVisibility(true);
 
     experience_chart
         .width(600)
@@ -153,9 +199,9 @@ d3.csv('job-data.csv', function(data) {
                 }
             },
             {
-                label: 'Median Annual Wage',
+                label: 'Average Annual Wage',
                 format: function(d) {
-                    return currency_formatter(+d.med_annual_wage);
+                    return currency_formatter(d.mean_annual_wage);
                 }
             },
         ]);
