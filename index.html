@@ -37,6 +37,12 @@
                                 from the <a href="https://www.bls.gov">Bureau of Labor Statistics</a>.
                             </p>
                         </div>
+                    </div>
+
+                    <div class="card fluid">
+                        <div class="section">
+                            <p id="num_jobs1"></p>
+                        </div>
 
                         <div class="section">
                             <div id="wage_chart">
@@ -46,15 +52,15 @@
                                 </span>
                                 <a class='reset'
                                    href='javascript:wage_chart.filterAll();dc.redrawAll();'
-                                   style='visibility: hidden;'>reset
+                                   style='visibility: hidden;'>Reset
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
                             <div id="category_chart">
-                                <strong>Number of Occupations by Category</strong>
+                                <strong>Employment by Category</strong>
                                 <a class='reset'
                                    href='javascript:category_chart.filterAll();dc.redrawAll();'
-                                   style='visibility: hidden;'>reset
+                                   style='visibility: hidden;'>Reset
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
@@ -74,7 +80,7 @@
                                 <strong>Prior Experience and Training</strong>
                                 <a class='reset'
                                    href='javascript:experience_chart.filterAll();dc.redrawAll();'
-                                   style='visibility: hidden;'>reset
+                                   style='visibility: hidden;'>Reset
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
@@ -82,7 +88,7 @@
                                 <strong>Uncertainty in Decision Making</strong>
                                 <a class='reset'
                                    href='javascript:uncertainty_chart.filterAll();dc.redrawAll();'
-                                   style='visibility: hidden;'>reset
+                                   style='visibility: hidden;'>Reset
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
@@ -93,7 +99,7 @@
                                 <strong>Variety vs Pace of work</strong>
                                 <a class='reset'
                                    href='javascript:pace_chart.filterAll();dc.redrawAll();'
-                                   style='visibility: hidden;'>reset
+                                   style='visibility: hidden;'>Reset
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
@@ -101,7 +107,7 @@
                                 <strong>Interaction Complexity vs Frequency</strong>
                                 <a class='reset'
                                    href='javascript:communication_chart.filterAll();dc.redrawAll();'
-                                   style='visibility: hidden;'>reset
+                                   style='visibility: hidden;'>Reset
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
@@ -109,7 +115,7 @@
                                 <strong>Danger vs Physicality</strong>
                                 <a class='reset'
                                    href='javascript:physicality_chart.filterAll();dc.redrawAll();'
-                                   style='visibility: hidden;'>reset
+                                   style='visibility: hidden;'>Reset
                                 </a>
                                 <div class="clearfix"></div>
                             </div>
@@ -120,9 +126,13 @@
                     <div class="card fluid">
                         <div class="section">
                             <h2>Selected Occupations</h2>
-                            <div class="dc-data-count" id="average_wage"></div>
-                            <div class="dc-data-count" id="num_employed"></div>
-                            <div class="dc-data-count" id="num_jobs"></div>
+                        </div>
+                        <div class="section">
+                            <p>
+                            <span id="average_wage"></span> |
+                            <span id="num_employed"></span> |
+                            <span id="num_jobs2"></span>
+                            </p>
                         </div>
                         <div class="section"><table id="data_table"></table></div>
                     </div>
