@@ -1,0 +1,28 @@
+#wage_chart .barLabel {
+    font-size: 80%;
+}
+
+#category_chart text.pie-label {
+    fill: black;
+}
+
+.row2 g.x.axis g.tick {
+    display: none;
+}
+
+.scatterplots g.axis g.tick {
+    display: none;
+}
+
+#data_table .dc-table-group {
+    text-align: center;
+    font-weight: bold;
+}
+
+#data_table .dc-table-column._1 {
+    text-align: right;
+}
+
+#data_table .dc-table-column._2 {
+    text-align: right;
+}

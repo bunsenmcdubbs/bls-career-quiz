@@ -8,25 +8,12 @@
 
         <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-default.min.css" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.10/dc.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="./style.css" />
     </head>
 
     <body>
         <h1>Career Explorer</h1>
         <div class="container">
-            <div class="row">
-                <div class="col-4">
-                    <div class="dc-data-count" id="average_wage">
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="dc-data-count" id="num_employed"></div>
-                </div>
-                <div class="col-4">
-                    <div class="dc-data-count" id="num_jobs">
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div id="wage_chart">
                     <strong>Average Annual Wage</strong>
@@ -39,26 +26,27 @@
                     </a>
                     <div class="clearfix"></div>
                 </div>
+                <div id="category_chart">
+                    <strong>Portion of Occupations by Industry</strong>
+                    <a class='reset'
+                       href='javascript:category_chart.filterAll();dc.redrawAll();'
+                       style='visibility: hidden;'>reset
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
             </div>
-            <div class="row">
+
+            <div class="row row2">
                 <div id="experience_chart">
                     <strong>Prior Experience and Training</strong>
-                    <span class='reset' style='visibility:hidden;'>
-                        Current filter: <span class='filter'></span>
-                    </span>
                     <a class='reset'
                        href='javascript:experience_chart.filterAll();dc.redrawAll();'
                        style='visibility: hidden;'>reset
                     </a>
                     <div class="clearfix"></div>
                 </div>
-            </div>
-            <div class="row">
                 <div id="uncertainty_chart">
-                    <strong>Uncertainty Decision Making</strong>
-                    <span class='reset' style='visibility:hidden;'>
-                        Current filter: <span class='filter'></span>
-                    </span>
+                    <strong>Uncertainty in Decision Making</strong>
                     <a class='reset'
                        href='javascript:uncertainty_chart.filterAll();dc.redrawAll();'
                        style='visibility: hidden;'>reset
@@ -66,38 +54,26 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
-            <div class="row">
+
+            <div class="row scatterplots">
                 <div id="pace_chart">
                     <strong>Variety vs Pace of work</strong>
-                    <span class='reset' style='visibility:hidden;'>
-                        Current filter: <span class='filter'></span>
-                    </span>
                     <a class='reset'
                        href='javascript:pace_chart.filterAll();dc.redrawAll();'
                        style='visibility: hidden;'>reset
                     </a>
                     <div class="clearfix"></div>
                 </div>
-            </div>
-            <div class="row">
                 <div id="communication_chart">
-                    <strong>Communication (Complexity vs Frequency)</strong>
-                    <span class='reset' style='visibility:hidden;'>
-                        Current filter: <span class='filter'></span>
-                    </span>
+                    <strong>Interaction Complexity vs Frequency</strong>
                     <a class='reset'
                        href='javascript:communication_chart.filterAll();dc.redrawAll();'
                        style='visibility: hidden;'>reset
                     </a>
                     <div class="clearfix"></div>
                 </div>
-            </div>
-            <div class="row">
                 <div id="physicality_chart">
                     <strong>Danger vs Physicality</strong>
-                    <span class='reset' style='visibility:hidden;'>
-                        Current filter: <span class='filter'></span>
-                    </span>
                     <a class='reset'
                        href='javascript:physicality_chart.filterAll();dc.redrawAll();'
                        style='visibility: hidden;'>reset
@@ -105,6 +81,13 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="dc-data-count" id="average_wage"></div>
+                <div class="dc-data-count" id="num_employed"></div>
+                <div class="dc-data-count" id="num_jobs"></div>
+            </div>
+
             <div class="row">
                 <table id="data_table">
                 </table>

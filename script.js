@@ -2,6 +2,7 @@ average_wage_display = dc.numberDisplay('#average_wage');
 num_employed_display = dc.numberDisplay('#num_employed');
 num_jobs_display = dc.dataCount('#num_jobs');
 wage_chart = dc.barChart('#wage_chart');
+category_chart = dc.pieChart('#category_chart');
 experience_chart = dc.barChart('#experience_chart');
 uncertainty_chart = dc.barChart('#uncertainty_chart');
 pace_chart = dc.scatterPlot('#pace_chart');
@@ -30,6 +31,9 @@ d3.csv('job-data.csv', function(data) {
     var wage_dim = ndx.dimension(function(d) {
         return Math.floor(d.mean_annual_wage / 10000) * 10000;
     });
+    var category_dim = ndx.dimension(function(d) {
+        return d.category_name.replace(' Occupations', '');
+    });
     var occupation_code_dim = ndx.dimension(function (d) {
         return d.occupation_code;
     });
@@ -52,25 +56,26 @@ d3.csv('job-data.csv', function(data) {
     var total_wage = ndx.groupAll().reduceSum(function (d) {return d.mean_annual_wage * d.num_employed;});
     var num_employed = ndx.groupAll().reduceSum(function(d) {return d.num_employed;});
     var wage_group = wage_dim.group().reduceSum(function(d) {return d.num_employed;});
+    var category_group = category_dim.group().reduceCount();
     var communication_group = communication_type_dim.group().reduceCount();
     var experience_group = experience_dim.group().reduceSum(function(d) {return d.num_employed;});
     var uncertainty_group = uncertainty_dim.group().reduceSum(function(d) {return d.num_employed;});
     var pace_variety_group = pace_variety_dim.group().reduceSum(function(d) {return d.num_employed;});
     var physicality_group = physicality_danger_dim.group().reduceCount();
 
+    average_wage_display
+        .group(total_wage)
+        .valueAccessor(function(p) {return p / num_employed_display.value();})
+        .html({
+            some: 'Average selected annual wage: <strong>$%number</strong>',
+            all: 'All occupations selected. Please click on the graph to apply filters.'
+        });
+
     num_employed_display
         .group(num_employed)
         .valueAccessor(function(p) {return p;})
         .html({
             some: '<strong>%number jobs</strong> selected',
-            all: 'All occupations selected. Please click on the graph to apply filters.'
-        });
-
-    average_wage_display
-        .group(total_wage)
-        .valueAccessor(function(p) {return p / num_employed_display.value();})
-        .html({
-            some: 'Average annual wage: <strong>$%number</strong>',
             all: 'All occupations selected. Please click on the graph to apply filters.'
         });
 
@@ -82,26 +87,49 @@ d3.csv('job-data.csv', function(data) {
             all: 'All records selected. Please click on the graph to apply filters.'
         });
 
+    var short_currency = d3.format('$.1s');
     wage_chart
-        .width(600)
-        .height(150)
+        .width(800)
+        .height(400)
         .margins({top: 10, right: 50, bottom: 30, left: 60})
 
         .dimension(wage_dim)
         .group(wage_group)
+        .filterPrinter(function (d) {
+            return short_currency(d[0][0]) + " to " + short_currency(d[0][1]);
+        })
 
-        .x(d3.scale.linear())
+        .x(d3.scale.linear().domain([20000, 210000]))
         // .xUnits(function() {return wage_group.all().length + 1;})
-        .xUnits(function() {return 20;})
-        .elasticX(true)
+        .xUnits(function() {return 19;})
+        // .elasticX(true)
         .elasticY(true)
+        .yAxisPadding('10%')
         .yAxisLabel('# Employed')
+        .renderHorizontalGridLines(true)
 
+        .label(function(d) {
+            if (d.y < 10) {return '';}
+            return d3.format('.1s')(d.y);
+        })
+        .controlsUseVisibility(true);
+    wage_chart.xAxis().tickFormat(d3.format('$,'));
+
+    category_chart
+        .width(400)
+        .height(400)
+
+        .dimension(category_dim)
+        .group(category_group)
+
+        .innerRadius(50)
+        .externalRadiusPadding(25)
+        .slicesCap(10)
         .controlsUseVisibility(true);
 
     experience_chart
         .width(600)
-        .height(150)
+        .height(200)
         .margins({top: 10, right: 50, bottom: 30, left: 60})
 
         .dimension(experience_dim)
@@ -111,12 +139,14 @@ d3.csv('job-data.csv', function(data) {
         .elasticX(true)
         .elasticY(true)
         .yAxisLabel('# Employed')
+        .renderHorizontalGridLines(true)
 
         .controlsUseVisibility(true);
+    experience_chart.xAxis().tickSize(0);
 
     uncertainty_chart
         .width(600)
-        .height(150)
+        .height(200)
         .margins({top: 10, right: 50, bottom: 30, left: 60})
 
         .dimension(uncertainty_dim)
@@ -126,12 +156,14 @@ d3.csv('job-data.csv', function(data) {
         .elasticX(true)
         .elasticY(true)
         .yAxisLabel('# Employed')
+        .renderHorizontalGridLines(true)
 
         .controlsUseVisibility(true);
+    uncertainty_chart.xAxis().tickSize(0);
 
     pace_chart
         .width(400)
-        .height(400)
+        .height(300)
 
         .dimension(pace_variety_dim)
         .group(pace_variety_group)
@@ -143,12 +175,19 @@ d3.csv('job-data.csv', function(data) {
         .yAxisPadding(.5)
         .xAxisLabel('Pace of Work')
         .yAxisLabel('Variety')
+        .renderHorizontalGridLines(true)
+        .renderVerticalGridLines(true)
 
+        .symbolSize(8)
+        .nonemptyOpacity(.4)
+        .excludedSize(3)
         .controlsUseVisibility(true);
+    pace_chart.xAxis().tickSize(0);
+    pace_chart.yAxis().tickSize(0);
 
     communication_chart
         .width(400)
-        .height(400)
+        .height(300)
 
         .dimension(communication_type_dim)
         .group(communication_group)
@@ -160,12 +199,19 @@ d3.csv('job-data.csv', function(data) {
         .yAxisPadding(.5)
         .xAxisLabel('Communication Frequency')
         .yAxisLabel('Interaction Complexity')
+        .renderHorizontalGridLines(true)
+        .renderVerticalGridLines(true)
 
+        .symbolSize(8)
+        .nonemptyOpacity(.4)
+        .excludedSize(3)
         .controlsUseVisibility(true);
+    communication_chart.xAxis().tickSize(0);
+    communication_chart.yAxis().tickSize(0);
 
     physicality_chart
         .width(400)
-        .height(400)
+        .height(300)
 
         .dimension(physicality_danger_dim)
         .group(physicality_group)
@@ -177,25 +223,37 @@ d3.csv('job-data.csv', function(data) {
         .yAxisPadding(.5)
         .xAxisLabel('Physicality')
         .yAxisLabel('Danger')
+        .renderHorizontalGridLines(true)
+        .renderVerticalGridLines(true)
 
+        .symbolSize(8)
+        .nonemptyOpacity(.4)
+        .excludedSize(3)
         .controlsUseVisibility(true);
+    physicality_chart.xAxis().tickSize(0);
+    physicality_chart.yAxis().tickSize(0);
 
-    currency_formatter = d3.format('$,.2f');
+    var number_formatter = d3.format(',f');
+    var currency_formatter = d3.format('$,.2f');
     jobs_table
-        .dimension(occupation_code_dim)
-        .group(function(d) { return ""; })
-        .size(50)
+        .dimension(ndx.dimension(function(d) { return d; }))
+        .group(function(d) { return d.category_name; })
+        .order(d3.ascending)
+        .sortBy(function(d) {
+            return d.occupation_name;
+        })
+        .size(400)
         .columns([
             {
                 label: 'Occupation',
                 format: function(d) {
-                    return d.occupation_text;
+                    return d.occupation_name;
                 }
             },
             {
                 label: 'Number Employed',
                 format: function(d) {
-                    return Math.round(d.num_employed);
+                    return number_formatter(d.num_employed);
                 }
             },
             {
