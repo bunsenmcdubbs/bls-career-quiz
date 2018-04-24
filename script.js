@@ -104,7 +104,7 @@ d3.csv('job-data.csv', function(data) {
     wage_chart
         .width(800)
         .height(400)
-        .margins({top: 10, right: 50, bottom: 30, left: 60})
+        .margins({top: 10, right: 0, bottom: 40, left: 60})
 
         .dimension(wage_dim)
         .group(wage_group)
@@ -114,14 +114,15 @@ d3.csv('job-data.csv', function(data) {
 
         .x(d3.scale.linear().domain([20000, 210000]))
         .xUnits(function() {return 19;})
+        .xAxisLabel('Annual Wage')
         .elasticY(true)
         .yAxisPadding('5%')
         .yAxisLabel('# Employed')
         .renderHorizontalGridLines(true)
 
         .label(function(d) {
-            if (d.y < 10) {return '';}
-            return d3.format('.1s')(d.y);
+            if (d.y < 1) {return '';}
+            return d3.format('.2s')(d.y);
         })
         .controlsUseVisibility(true);
     wage_chart.xAxis().tickFormat(d3.format('$,'));
@@ -142,7 +143,7 @@ d3.csv('job-data.csv', function(data) {
     experience_chart
         .width(600)
         .height(200)
-        .margins({top: 10, right: 50, bottom: 30, left: 60})
+        .margins({top: 10, right: 10, bottom: 30, left: 60})
 
         .dimension(experience_dim)
         .group(experience_group)
@@ -161,7 +162,7 @@ d3.csv('job-data.csv', function(data) {
     uncertainty_chart
         .width(600)
         .height(200)
-        .margins({top: 10, right: 50, bottom: 30, left: 60})
+        .margins({top: 10, right: 0, bottom: 30, left: 60})
 
         .dimension(uncertainty_dim)
         .group(uncertainty_group)
